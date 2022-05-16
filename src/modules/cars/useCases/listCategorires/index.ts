@@ -1,9 +1,12 @@
+import { Repository } from "typeorm";
 import { CategoriesRepository } from "../../repositories/implementations/CategoriesRepository";
 import { ListCategoriesController } from "./ListCategoriesController";
 import { ListCategoryUseCase } from "./ListCategoriesUseCase";
 
-const categoriesRepository = CategoriesRepository.getInstance();
-const listCategoryUseCase = new ListCategoryUseCase(categoriesRepository);
-const listCategoriesController = new ListCategoriesController(listCategoryUseCase);
+export default (): ListCategoriesController => {
 
-export { listCategoriesController };
+  const categoriesRepository = new CategoriesRepository();
+  const listCategoryUseCase = new ListCategoryUseCase(categoriesRepository);
+  const listCategoriesController = new ListCategoriesController(listCategoryUseCase);
+  return listCategoriesController;
+};
